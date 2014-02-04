@@ -27,7 +27,7 @@ import com.ftdi.j2xx.FT_Device;
 import com.ksksue.app.fpga_fifo.R;
 
 public class MainActivity extends Activity {
-    private final static String TAG = "FPGA_FIFO Activity";
+    private final static String TAG = "FTDI_UART_Sample Activity";
 
     private static D2xxManager ftD2xx = null;
     private FT_Device ftDev;
@@ -232,7 +232,7 @@ public class MainActivity extends Activity {
 
 									for (int i = 0; i < charDataArr.length; i++) {
 										tvRead.append(String.format("0x%04x ",
-												new Integer(charDataArr[i])));
+												(int)charDataArr[i]));
 									}
 
 									tvRead.append("\n");

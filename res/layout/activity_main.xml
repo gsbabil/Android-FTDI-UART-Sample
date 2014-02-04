@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:ems="10" />
+        android:ems="10"
+        android:inputType="text" />
 
     <Button
         android:id="@+id/btWrite"
@@ -24,7 +25,7 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/etWrite"
         android:onClick="onClickWrite"
-        android:text="Write" />
+        android:text="@string/lblWrite" />
 
     <TextView
         android:id="@+id/tvRead"
@@ -46,7 +47,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/etWrite"
         android:onClick="onClickOpen"
-        android:text="Open" />
+        android:text="@string/lblOpen" />
 
     <Button
         android:id="@+id/btClose"
@@ -55,7 +56,7 @@
         android:layout_above="@+id/tvRead"
         android:layout_toRightOf="@+id/btOpen"
         android:onClick="onClickClose"
-        android:text="Close" />
+        android:text="@string/lblClose" />
 
     <Button
         android:id="@+id/btClear"
@@ -64,17 +65,6 @@
         android:layout_above="@+id/tvRead"
         android:layout_toRightOf="@+id/btClose"
         android:onClick="onClickClear"
-        android:text="Clear" />
-
-    <EditText
-        android:id="@+id/EditText01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
+        android:text="@string/lblClear" />
 
 </RelativeLayout>
