@@ -34,7 +34,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/btOpen"
-        android:text="Read Data : " />
+        android:maxLines="24"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="Monospace" />
 
     <Button
         android:id="@+id/btOpen"
@@ -53,5 +56,25 @@
         android:layout_toRightOf="@+id/btOpen"
         android:onClick="onClickClose"
         android:text="Close" />
+
+    <Button
+        android:id="@+id/btClear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvRead"
+        android:layout_toRightOf="@+id/btClose"
+        android:onClick="onClickClear"
+        android:text="Clear" />
+
+    <EditText
+        android:id="@+id/EditText01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
 
 </RelativeLayout>

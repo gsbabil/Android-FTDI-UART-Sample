@@ -15,6 +15,7 @@ import android.content.IntentFilter;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -42,6 +43,9 @@ public class MainActivity extends Activity {
     Button btWrite;
     Button btClose;
 
+    /* Babil */
+    Button btClear;
+
     boolean mThreadIsStopped = true;
     Handler mHandler = new Handler();
     Thread mThread;
@@ -52,11 +56,14 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         tvRead = (TextView) findViewById(R.id.tvRead);
+        tvRead.setMovementMethod(new ScrollingMovementMethod());
+
         etWrite = (EditText) findViewById(R.id.etWrite);
 
         btOpen = (Button) findViewById(R.id.btOpen);
         btWrite = (Button) findViewById(R.id.btWrite);
         btClose = (Button) findViewById(R.id.btClose);
+        btClear = (Button) findViewById(R.id.btClear); /* Babil */
 
         updateView(false);
 
@@ -95,6 +102,27 @@ public class MainActivity extends Activity {
             byte[] writeByte = writeString.getBytes();
             ftDev.write(writeByte, writeString.length());
         }
+    }
+
+    /* Babil */
+	private void scrollToBottom() {
+		try {
+			final int scrollAmount = tvRead.getLayout().getLineTop(
+					tvRead.getLineCount())
+					- tvRead.getHeight();
+
+			if (scrollAmount > 0) {
+				tvRead.scrollTo(0, scrollAmount);
+			} else {
+				tvRead.scrollTo(0, 0);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+    public void onClickClear(View v) {
+        tvRead.setText("");
     }
 
     public void onClickClose(View v) {
@@ -192,9 +220,28 @@ public class MainActivity extends Activity {
                         }
                         mHandler.post(new Runnable() {
                             @Override
-                            public void run() {
-                                tvRead.append(String.copyValueOf(rchar,0,mReadSize));
-                            }
+							public void run() {
+								/* Babil */
+								char[] charDataArr = String.copyValueOf(rchar,
+										0, mReadSize).toCharArray(); 
+
+								if (charDataArr.length > 0) {
+									tvRead.append("Data["
+											+ String.valueOf(charDataArr.length)
+													.toString() + "] = ");
+
+									for (int i = 0; i < charDataArr.length; i++) {
+										tvRead.append(String.format("0x%04x ",
+												new Integer(charDataArr[i])));
+									}
+
+									tvRead.append("\n");
+									scrollToBottom();
+								}
+
+//								tvRead.append(String.copyValueOf(rchar, 0,
+//										mReadSize));
+							}
                         });
 
                     } // end of if(readSize>0)
@@ -216,10 +263,12 @@ public class MainActivity extends Activity {
             btOpen.setEnabled(false);
             btWrite.setEnabled(true);
             btClose.setEnabled(true);
+            btClear.setEnabled(true);
         } else {
             btOpen.setEnabled(true);
             btWrite.setEnabled(false);
             btClose.setEnabled(false);
+            btClear.setEnabled(true);
         }
     }
 
